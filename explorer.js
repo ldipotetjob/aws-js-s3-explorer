@@ -806,7 +806,8 @@ function AddFolderController($scope, SharedService) {
         DEBUG.log('Add folder');
         DEBUG.log('Current prefix:', $scope.add_folder.view_prefix);
 
-        const ef = stripLeadTrailSlash($scope.add_folder.entered_folder);
+        //MP commented 24/jun/24 set folder by default const ef = stripLeadTrailSlash($scope.add_folder.entered_folder);
+        const ef = 'genomixcloudfolder'
         const vpef = $scope.add_folder.view_prefix + ef;
         const folder = `${stripLeadTrailSlash(vpef)}/`;
         DEBUG.log('Calculated folder:', folder);
@@ -922,8 +923,12 @@ function SettingsController($scope, SharedService) {
 
     // Initialized for an unauthenticated user exploring the current bucket
     // TODO: calculate current bucket and initialize below
+
     $scope.settings = {
-        auth: 'anon', region: '', bucket: '', entered_bucket: '', selected_bucket: '', view: 'folder', delimiter: '/', prefix: '',
+//        auth: 'anon', region: '', bucket: '', entered_bucket: '', selected_bucket: '', view: 'folder', delimiter: '/', prefix: '',
+        // Maribel 31/05/24: Modify this code to send fixed values for our use case. 'auth' value is for Private Bucket (I have AWS credentials).
+            auth: 'auth', region: 'eu-west-1', bucket: '', entered_bucket: '', selected_bucket: '', view: 'folder', delimiter: '/', prefix: '',
+
     };
     $scope.settings.mfa = { use: 'no', code: '' };
     $scope.settings.cred = { accessKeyId: '', secretAccessKey: '', sessionToken: '' };
@@ -1463,7 +1468,8 @@ $(document).ready(() => {
     DEBUG.log('Version jQuery', $.fn.jquery);
 
     // Default AWS region and v4 signature
-    AWS.config.update({ region: '' });
+    //AWS.config.update({ region: '' });
+    AWS.config.update({ region: 'eu-west-1' });
     AWS.config.update({ signatureVersion: 'v4' });
 
     // Show navbuttons
